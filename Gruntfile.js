@@ -28,15 +28,42 @@ module.exports = function(grunt){
       materialize: ['source/font']
     },
 
+    uglify: {
+      options: {
+        mangle: false
+      },
+      vendors: {
+        files: {
+          '.tmp/vendors.min.js': [
+            'node_modules/jquery-circle-progress/dist/circle-progress.js',
+            'node_modules/requirejs/require.js'
+          ]
+        }
+      }
+    },
+
     concat: {
-      basic: {
+      scripts: {
         dest: 'source/js/vendors.js',
         src: [
-          'node_modules/jquery/dist/jquery.js',
-          'node_modules/materialize-css/dist/js/materialize.js',
-          'node_modules/jquery-circle-progress/dist/circle-progress.js',
-          'node_modules/requirejs/require.js'
+          'node_modules/jquery/dist/jquery.min.js',
+          'node_modules/materialize-css/dist/js/materialize.min.js',
+          '.tmp/vendors.min.js'
         ]
+      }
+    },
+
+    cssmin: {
+      options: {
+      },
+      target: {
+        files: {
+          'source/css/vendors.css': [
+            'node_modules/font-awesome/css/font-awesome.css',
+            'node_modules/materialize-css/dist/css/materialize.css',
+            'node_modules/lightbox2/dist/css/lightbox.css'
+          ]
+        }
       }
     },
 
@@ -47,7 +74,10 @@ module.exports = function(grunt){
           appDir: 'source/_js-source',
           mainConfigFile: 'source/_js-source/app.js',
           baseUrl: '.',
-          optimize: 'none',
+          optimize: 'uglify2',
+          uglify2: {
+            mangle: false
+          },
           dir: 'source/js',
           generateSourceMaps: false,
           preserveLicenseComments: false,
@@ -55,7 +85,7 @@ module.exports = function(grunt){
           findNestedDependencies: true,
           paths: {
             jquery: 'empty:',
-            lightbox: '../../node_modules/lightbox2/dist/js/lightbox'
+            lightbox: '../../node_modules/lightbox2/dist/js/lightbox' //lightbox need to be here, because it cant find images if placed on head
           },
           modules: [
             {
@@ -73,5 +103,6 @@ module.exports = function(grunt){
   require('load-grunt-tasks')(grunt);
 
 
-  grunt.registerTask('default', [ 'clean', 'copy', 'requirejs', 'concat']);
+  grunt.registerTask('default', []);
+  grunt.registerTask('build', [ 'clean', 'copy', 'cssmin', 'requirejs', 'uglify', 'concat']);
 };
