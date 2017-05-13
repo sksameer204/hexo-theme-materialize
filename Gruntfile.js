@@ -1,4 +1,6 @@
-module.exports = function(grunt){
+const loadGruntTasks = require('load-grunt-tasks');
+
+module.exports = (grunt) => {
   grunt.initConfig({
     copy: {
       fontawesome: {
@@ -85,7 +87,8 @@ module.exports = function(grunt){
           findNestedDependencies: true,
           paths: {
             jquery: 'empty:',
-            lightbox: '../../node_modules/lightbox2/dist/js/lightbox' //lightbox need to be here, because it cant find images if placed on head
+            // lightbox need to be here, because it cant find images if placed on head
+            lightbox: '../../node_modules/lightbox2/dist/js/lightbox'
           },
           modules: [
             {
@@ -100,9 +103,9 @@ module.exports = function(grunt){
     }
   });
 
-  require('load-grunt-tasks')(grunt);
+  loadGruntTasks(grunt);
 
 
   grunt.registerTask('default', []);
-  grunt.registerTask('build', [ 'clean', 'copy', 'cssmin', 'requirejs', 'uglify', 'concat']);
+  grunt.registerTask('build', ['clean', 'copy', 'cssmin', 'requirejs', 'uglify', 'concat']);
 };
