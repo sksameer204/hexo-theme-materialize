@@ -1,6 +1,6 @@
 # Welcome to Materialize Hexo Theme
 
-[![Screenshot](https://raw.githubusercontent.com/carlos-algms/hexo-theme-materialize/master/source/images/_hexo-theme-materialize.jpg)
+![Screenshot](https://raw.githubusercontent.com/carlos-algms/hexo-theme-materialize/master/source/images/_hexo-theme-materialize.jpg)
 
 [Live Demo Here](http://carlos-algms.github.io/)
 
@@ -30,7 +30,7 @@
 
 ### Install the theme
 
-You install the theme by using:
+You can install the theme by using:
 
 ```
 $ git clone https://github.com/carlos-algms/hexo-theme-materialize.git themes/materialize
@@ -47,7 +47,39 @@ i.e:
 theme: materialize
 ```
 
-## Post Configuration
+After this, uninstall `hexo-generator-index` 
+since this theme will use a custom index, we dont need this hexo generator.
+
+```
+npm uninstall --save hexo-generator-index
+```
+
+Create your custom index file on `source/index.html`:
+
+```html
+---
+layout: index
+title:
+comments: false
+---
+<h1>Hello World<h1> 
+``` 
+
+
+## Configure your site urls
+
+You can configure any url you may want to serve your blog content,
+follow the suggested one: 
+
+```yml
+permalink: blog/:title/
+tag_dir: blog/tags
+archive_dir: blog
+category_dir: blog/categories
+```
+
+
+## Post Configurations
 
 Each post supports the standard `title`, `date`, `categories`, `tags`.
 
@@ -66,7 +98,7 @@ The theme's global configuration is done in `/themes/materialize/_config.yml`.
 
 ### Menu
 
-The menu is configured in the theme's `_config.yml`.
+The menu is configured under the theme's `_config.yml`.
 
 ``` yaml
 # Header
@@ -75,7 +107,7 @@ menu:
   Blog: /blog
 ```
 
-The object key is the label and the value is the path.
+**PS:** The `Blog` menu must match your `archive_dir` config.
 
 
 ### Google Analytics
