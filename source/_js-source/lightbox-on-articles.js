@@ -1,11 +1,9 @@
 'use strict';
 
-define(['jquery'], function($){
-
-  $('.article-entry').each( applyLightBoxToImages );
+define(['jquery'], function($) {
+  $('.article-entry').each(applyLightBoxToImages);
 
   //////////
-
 
   function applyLightBoxToImages(i) {
     var articleEntry = $(this);
@@ -14,9 +12,7 @@ define(['jquery'], function($){
 
     articleEntry.find('a[data-lightbox]').each(addRelPropertyOnLinks);
 
-
     //////////////
-
 
     function prepareImages(j) {
       var img = $(this);
@@ -24,13 +20,21 @@ define(['jquery'], function($){
         return;
       }
 
-      img.wrap('<a href="' + this.src + '" title="' + this.alt + '" data-lightbox="image-' + i + '-' + j + '" />');
+      img.wrap(
+        '<a href="' +
+          this.src +
+          '" title="' +
+          this.alt +
+          '" data-lightbox="image-' +
+          i +
+          '-' +
+          j +
+          '" />',
+      );
     }
-
 
     function addRelPropertyOnLinks() {
       this.rel = 'article' + i;
     }
-
   }
 });
