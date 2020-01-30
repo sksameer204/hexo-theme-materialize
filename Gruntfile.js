@@ -30,9 +30,11 @@ module.exports = (grunt) => {
       materialize: ['source/font']
     },
 
-    uglify: {
+    terser: {
       options: {
-        mangle: false
+        mangle: false,
+        ecma: 2018,
+        sourceMap: false,
       },
       vendors: {
         files: {
@@ -41,6 +43,11 @@ module.exports = (grunt) => {
             'node_modules/requirejs/require.js'
           ]
         }
+      },
+      jsSources: {
+        expand: true,
+        src: ['source/js/**/*.js'],
+        dest: './'
       }
     },
 
@@ -76,13 +83,10 @@ module.exports = (grunt) => {
           appDir: 'source/_js-source',
           mainConfigFile: 'source/_js-source/app.js',
           baseUrl: '.',
-          optimize: 'uglify2',
-          uglify2: {
-            mangle: false
-          },
+          optimize: 'none',
           dir: 'source/js',
           generateSourceMaps: false,
-          preserveLicenseComments: false,
+          preserveLicenseComments: true,
           inlineText: true,
           findNestedDependencies: true,
           paths: {
@@ -97,7 +101,7 @@ module.exports = (grunt) => {
           ],
           shim: {
           },
-          noBuildTxt: true
+          writeBuildTxt: false
         }
       }
     }
@@ -107,5 +111,5 @@ module.exports = (grunt) => {
 
 
   grunt.registerTask('default', []);
-  grunt.registerTask('build', ['clean', 'copy', 'cssmin', 'requirejs', 'uglify', 'concat']);
+  grunt.registerTask('build', ['clean', 'copy', 'cssmin', 'requirejs', 'terser', 'concat']);
 };
