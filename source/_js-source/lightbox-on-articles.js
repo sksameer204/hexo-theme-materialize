@@ -1,40 +1,47 @@
 'use strict';
 
-define(['jquery'], function($) {
+define(['jquery'], lightboxOnArticles);
+
+/**
+ * @param {JQueryStatic} $
+ */
+function lightboxOnArticles($) {
   $('.article-entry').each(applyLightBoxToImages);
 
   //////////
 
-  function applyLightBoxToImages(i) {
-    var articleEntry = $(this);
-
-    articleEntry.find('img').each(prepareImages);
-
-    articleEntry.find('a[data-lightbox]').each(addRelPropertyOnLinks);
+  /**
+   * @param {number} i
+   * @param {HTMLDivElement} div
+   */
+  function applyLightBoxToImages(i, div) {
+    $('img', div).each(prepareImages);
+    $('a[data-lightbox]', div).each(addRelPropertyOnLinks);
 
     //////////////
 
-    function prepareImages(j) {
-      var img = $(this);
-      if (img.parent().hasClass('fancybox')) {
+    /**
+     * @param {number} j
+     * @param {HTMLImageElement} imgEl
+     */
+    function prepareImages(j, imgEl) {
+      const $img = $(imgEl);
+
+      if ($img.parent().hasClass('fancybox')) {
         return;
       }
 
-      img.wrap(
-        '<a href="' +
-          this.src +
-          '" title="' +
-          this.alt +
-          '" data-lightbox="image-' +
-          i +
-          '-' +
-          j +
-          '" />',
-      );
+      const { src = '', alt = '' } = imgEl;
+
+      $img.wrap(`<a href="${src}" title="${alt}" data-lightbox="image-${i}-${j}" />`);
     }
 
-    function addRelPropertyOnLinks() {
-      this.rel = 'article' + i;
+    /**
+     * @param {number} i
+     * @param {HTMLAnchorElement} link
+     */
+    function addRelPropertyOnLinks(i, link) {
+      link.rel = 'article' + i;
     }
   }
-});
+}

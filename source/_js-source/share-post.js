@@ -1,10 +1,14 @@
 'use strict';
 
-define(['jquery'], /**
-   * @param {JQueryStatic} $
-   */
- function($) {
-  $('body')
+define(['jquery'], sharePost);
+
+/**
+ * @param {JQueryStatic} $
+ */
+function sharePost($) {
+  const $body = $(document.body);
+
+  $body
     .on('click', removeOverlay)
     .on('click', '.article-share-link', share)
     .on('click', '.article-share-box', stopPropagation)
@@ -17,12 +21,15 @@ define(['jquery'], /**
     $('.article-share-box.on').removeClass('on');
   }
 
+  /**
+   * @param {Event} e
+   */
   function share(e) {
     e.stopPropagation();
 
-    var $this = $(this);
-    var id = 'article-share-box-' + $this.attr('data-id');
-    var box = $('#' + id);
+    const $this = $(e.currentTarget);
+    const id = 'article-share-box-' + $this.attr('data-id');
+    let box = $('#' + id);
 
     if (box.hasClass('on')) {
       box.removeClass('on');
@@ -35,7 +42,7 @@ define(['jquery'], /**
 
     $('.article-share-box.on').hide();
 
-    var offset = $this.offset();
+    const offset = $this.offset();
     box
       .css({
         top: offset.top + 25,
@@ -44,10 +51,14 @@ define(['jquery'], /**
       .addClass('on');
   }
 
+  /**
+   * @param {string} id
+   * @param {string} url
+   */
   function _createShareBox(id, url) {
-    var encodedUrl = encodeURIComponent(url);
+    const encodedUrl = encodeURIComponent(url);
 
-    var html = [
+    const html = [
       '<div id="' + id + '" class="article-share-box">',
       '<input class="article-share-box-input" value="' + url + '">',
       '<div class="article-share-links">',
@@ -67,24 +78,33 @@ define(['jquery'], /**
       '</div>',
     ].join('');
 
-    var box = $(html);
+    const box = $(html);
 
-    $('body').append(box);
+    $body.append(box);
     return box;
   }
 
+  /**
+   * @param {Event} e
+   */
   function stopPropagation(e) {
     e.stopPropagation();
   }
 
-  function selectContent() {
-    $(this).select();
+  /**
+   * @param {Event} e
+   */
+  function selectContent(e) {
+    $(e.currentTarget).select();
   }
 
+  /**
+   * @param {Event & { currentTarget: HTMLAnchorElement }} e
+   */
   function openShareWindow(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+    window.open(e.currentTarget.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
   }
-});
+}

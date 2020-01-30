@@ -1,18 +1,37 @@
 'use strict';
 
-define(function() {
-  var head = document.getElementsByTagName('head')[0];
+ /**
+  * @callback LoadCssFn
+  * @param {string} url
+  * @param {(e: HTMLLinkElement) => any} node
+  * @returns {Promise<HTMLLinkElement>}
+  */
+
+
+define(() => {
+  const head = document.head;
   return loadCss;
 
   ///////////////////
 
+  /**
+   * @type {LoadCssFn}
+   */
   function loadCss(url, callback) {
-    var link = document.createElement('link');
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.id = 'loadCss-' + Date.now();
-    link.href = url;
-    link.onload = callback;
-    head.appendChild(link);
+    return new Promise((res, rej) => {
+      const link = document.createElement('link');
+      link.type = 'text/css';
+      link.rel = 'stylesheet';
+      link.id = 'loadCss-' + Date.now();
+      link.href = url;
+      link.onload = () => {
+        res(link);
+        if (callback) {
+          callback(link);
+        }
+      };
+      link.onerror = rej;
+      head.appendChild(link);
+    });
   }
 });
