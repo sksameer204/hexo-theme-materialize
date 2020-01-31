@@ -29,6 +29,7 @@
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
   <%- open_graph({twitter_id: theme.twitter, google_plus: theme.google_plus, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
 
@@ -61,6 +62,8 @@
 
   <%- js('js/vendors') %>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es5,es6,es7,fetch,Object.entries,Object.values&flags=gated"></script>
+
   <script>
     define('jquery', function () {
       return window.jQuery;
@@ -83,7 +86,7 @@
         &copy; <%= date(new Date(), 'YYYY') %> <%= config.author || config.title %>
 
         <div class="right">
-          Powered by <a href="http://hexo.io/" rel="nofollow" class="white-text" target="_blank">Hexo</a>
+          Powered by <a href="http://hexo.io/" rel="nofollow noopener noreferrer" class="white-text" target="_blank">Hexo</a>
         </div>
       </div>
     </div>
