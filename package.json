@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "build": "rm -rf source/js && grunt build"
+    "build": "grunt build"
   },
   "devDependencies": {
     "font-awesome": "^4.7.0",

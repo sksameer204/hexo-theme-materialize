@@ -27,7 +27,8 @@ module.exports = (grunt) => {
 
     clean: {
       fontawesome: ['source/css/fonts'],
-      materialize: ['source/font']
+      materialize: ['source/font'],
+      jsCompiled: ['source/js']
     },
 
     terser: {
