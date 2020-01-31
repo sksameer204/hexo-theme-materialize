@@ -99,12 +99,14 @@ function sharePost($) {
   }
 
   /**
-   * @param {Event & { currentTarget: HTMLAnchorElement }} e
+   * @param {Event & { currentTarget: any }} e
    */
   function openShareWindow(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    window.open(e.currentTarget.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+    /** @type {HTMLAnchorElement} */
+    const anchor = e.currentTarget;
+    window.open(anchor.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
   }
 }
