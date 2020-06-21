@@ -16,7 +16,7 @@
     "grunt-contrib-requirejs": "^1.0.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-terser": "^1.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-circle-progress": "^1.2.2",
     "lightbox2": "^2.11.1",
     "load-grunt-tasks": "^5.1.0",
